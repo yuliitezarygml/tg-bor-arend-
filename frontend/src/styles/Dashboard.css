@@ -1,0 +1,329 @@
+.dashboard {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.dashboard h2 {
+  margin-bottom: 30px;
+  color: #e0e0e0;
+  font-size: 28px;
+}
+
+/* Первый ряд - большие карточки */
+.stats-grid-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-box-large {
+  background: linear-gradient(135deg, #2d5a2d 0%, #1a3a1a 100%);
+  padding: 30px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  border: 2px solid #00d4ff;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+  text-align: center;
+  min-height: 140px;
+}
+
+.stat-box-large:nth-child(2) {
+  background: linear-gradient(135deg, #d4aa00 0%, #8a6d00 100%);
+  border-color: #ffdd44;
+  box-shadow: 0 4px 15px rgba(255, 221, 68, 0.2);
+}
+
+.stat-box-large:nth-child(3) {
+  background: linear-gradient(135deg, #00a8d4 0%, #006a99 100%);
+  border-color: #44ccff;
+  box-shadow: 0 4px 15px rgba(68, 204, 255, 0.2);
+}
+
+.stat-box-large:nth-child(4) {
+  background: linear-gradient(135deg, #4444ff 0%, #0000aa 100%);
+  border-color: #6666ff;
+  box-shadow: 0 4px 15px rgba(102, 102, 255, 0.2);
+}
+
+.stat-number {
+  font-size: 48px;
+  font-weight: bold;
+  color: white;
+}
+
+.stat-icon {
+  font-size: 32px;
+}
+
+.stat-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Второй ряд - вторичные метрики */
+.stats-grid-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.stat-box-secondary {
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.stat-amount {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.stat-desc {
+  color: #aaa;
+  font-size: 14px;
+  flex: 1;
+}
+
+.stat-icon-small {
+  font-size: 28px;
+  opacity: 0.8;
+}
+
+/* Секции Dashboard */
+.dashboard-section {
+  margin-top: 40px;
+  background: #222;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-section h3 {
+  margin: 0 0 20px 0;
+  color: #00d4ff;
+  font-size: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #333;
+}
+
+/* Активные аренды в реальном времени */
+.rental-item-live {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.05) 0%, transparent 100%);
+  border-left: 4px solid #00d4ff;
+  border-radius: 4px;
+  gap: 20px;
+  margin-bottom: 12px;
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-left-color: #00d4ff;
+  }
+  50% {
+    border-left-color: #44ff44;
+  }
+}
+
+.rental-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.rental-info strong {
+  color: #e0e0e0;
+  font-size: 16px;
+}
+
+.rental-user {
+  color: #888;
+  font-size: 14px;
+}
+
+.rental-start {
+  color: #666;
+  font-size: 12px;
+}
+
+.rental-live-data {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  min-width: 150px;
+}
+
+.rental-price-hour {
+  color: #00d4ff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.rental-current-spending {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: right;
+}
+
+.spending-label {
+  color: #666;
+  font-size: 12px;
+}
+
+.spending-amount {
+  color: #44ff44;
+  font-weight: bold;
+  font-size: 18px;
+  animation: spending-pulse 1s ease-in-out infinite;
+}
+
+@keyframes spending-pulse {
+  0%, 100% {
+    color: #44ff44;
+    text-shadow: 0 0 5px rgba(68, 255, 68, 0.3);
+  }
+  50% {
+    color: #55ff55;
+    text-shadow: 0 0 10px rgba(68, 255, 68, 0.6);
+  }
+}
+
+/* Старая версия rental-item (совместимость) */
+.rentals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rental-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #1a1a1a;
+  border-left: 4px solid #00d4ff;
+  border-radius: 4px;
+  gap: 15px;
+}
+
+.rental-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.rental-info strong {
+  color: #e0e0e0;
+  font-size: 16px;
+}
+
+.rental-user {
+  color: #888;
+  font-size: 14px;
+}
+
+.rental-date {
+  color: #aaa;
+  font-size: 14px;
+  min-width: 120px;
+}
+
+.rental-price {
+  color: #00d4ff;
+  font-weight: bold;
+  font-size: 16px;
+  min-width: 80px;
+  text-align: right;
+}
+
+/* История */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #1a1a1a;
+  border-left: 4px solid #44ccff;
+  border-radius: 4px;
+  gap: 15px;
+}
+
+.history-type {
+  background: #1a3a4d;
+  color: #44ccff;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.history-details {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.history-console {
+  color: #e0e0e0;
+  font-weight: 500;
+}
+
+.history-user {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.history-time {
+  color: #666;
+  font-size: 12px;
+  min-width: 180px;
+  text-align: right;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  margin: 0;
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

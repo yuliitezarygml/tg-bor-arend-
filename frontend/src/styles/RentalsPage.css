@@ -1,0 +1,47 @@
+.rentals-table table {
+  width: 100%;
+  background: #222;
+}
+
+.rentals-table table thead {
+  background: #222;
+  border-bottom: 2px solid #00d4ff;
+}
+
+.rentals-table table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #00d4ff;
+  font-size: 14px;
+}
+
+.rentals-table table td {
+  padding: 15px;
+  border-bottom: 1px solid #333;
+  color: #aaa;
+}
+
+.rentals-table table tbody tr:hover {
+  background: #252525;
+}
+
+.rentals-table .badge {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.rentals-table .badge-active {
+  background: #1a4d1a;
+  color: #44ff44;
+  border: 1px solid #44ff44;
+}
+
+.rentals-table .badge-completed {
+  background: #1a3a4d;
+  color: #44ccff;
+  border: 1px solid #44ccff;
+}
