@@ -1813,9 +1813,9 @@ function saveAdminSettings() {
     const maxRentalHours = parseInt(safeGetValue('maxRentalHours', '24')) || 24;
     const reminderHours = parseInt(safeGetValue('reminderHours', '1')) || 1;
     const pushNotificationsEnabled = safeIsChecked('pushNotificationsEnabled');
-    const criticalNotificationsEnabled = document.getElementById('criticalNotificationsEnabled').checked;
-    const notificationFrequency = parseInt(document.getElementById('notificationFrequency').value);
-    const showConsolePhotos = document.getElementById('showConsolePhotos').checked;
+    const criticalNotificationsEnabled = safeIsChecked('criticalNotificationsEnabled');
+    const notificationFrequency = parseInt(safeGetValue('notificationFrequency', '1')) || 1;
+    const showConsolePhotos = safeIsChecked('showConsolePhotos');
     
     const data = {
         admin_chat_id: adminChatId,
