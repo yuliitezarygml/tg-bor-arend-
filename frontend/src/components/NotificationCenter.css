@@ -4,117 +4,127 @@
 
 .notification-bell {
   position: relative;
-  background: none;
-  border: none;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   color: #e0e0e0;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
   transition: all 0.3s ease;
+  font-size: 20px;
 }
 
 .notification-bell:hover {
-  background: #333;
+  background: rgba(0, 212, 255, 0.2);
   color: #00d4ff;
+  border-color: rgba(0, 212, 255, 0.4);
 }
 
 .notification-bell .badge {
   position: absolute;
   top: -8px;
   right: -8px;
-  background: #f87171;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
   color: white;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 800;
   animation: pulse 2s infinite;
+  box-shadow: 0 0 12px rgba(255, 107, 107, 0.5);
+  border: 2px solid rgba(10, 14, 39, 0.9);
 }
 
 .notification-panel {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 10px);
   right: 0;
-  background: #0f0f0f;
-  border: 1px solid #333;
+  background: linear-gradient(135deg, rgba(15, 20, 48, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: 12px;
-  width: 380px;
-  max-height: 500px;
+  width: 400px;
+  max-height: 520px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px rgba(0, 212, 255, 0.15), 0 0 80px rgba(0, 0, 0, 0.4);
   z-index: 1000;
-  margin-top: 0.5rem;
-  animation: slideDown 0.3s ease;
+  animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
 }
 
 .panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #333;
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.08) 0%, transparent 100%);
 }
 
 .panel-header h3 {
   color: #e0e0e0;
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
 }
 
 .close-btn {
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
-  color: #a0a0a0;
+  color: #a8a8a8;
   cursor: pointer;
-  padding: 0.25rem;
+  padding: 0.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.3s ease;
+  font-size: 18px;
 }
 
 .close-btn:hover {
-  background: #1a1a1a;
-  color: #e0e0e0;
+  background: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+  border-color: rgba(0, 212, 255, 0.4);
 }
 
 .notifications-list {
   overflow-y: auto;
   flex: 1;
-  max-height: 350px;
+  max-height: 380px;
 }
 
 .notifications-list::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 .notifications-list::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: rgba(26, 26, 26, 0.5);
 }
 
 .notifications-list::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.4) 0%, rgba(0, 136, 255, 0.2) 100%);
+  border-radius: 4px;
 }
 
 .notifications-list::-webkit-scrollbar-thumb:hover {
-  background: #444;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.6) 0%, rgba(0, 136, 255, 0.4) 100%);
 }
 
 .empty-notifications {
-  padding: 2rem 1rem;
+  padding: 2.5rem 1.5rem;
   text-align: center;
-  color: #a0a0a0;
-  font-size: 0.95rem;
+  color: #888;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .notification-item {

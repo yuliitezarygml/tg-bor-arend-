@@ -1,47 +1,63 @@
+.rentals-table {
+  overflow-x: auto;
+}
+
 .rentals-table table {
   width: 100%;
-  background: #222;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border-collapse: collapse;
 }
 
 .rentals-table table thead {
-  background: #222;
-  border-bottom: 2px solid #00d4ff;
+  background: linear-gradient(180deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 136, 255, 0.05) 100%);
+  border-bottom: 2px solid rgba(0, 212, 255, 0.3);
 }
 
 .rentals-table table th {
-  padding: 15px;
+  padding: 18px 16px;
   text-align: left;
-  font-weight: 600;
+  font-weight: 700;
   color: #00d4ff;
   font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .rentals-table table td {
-  padding: 15px;
-  border-bottom: 1px solid #333;
-  color: #aaa;
+  padding: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #c0c0c0;
+  font-size: 14px;
+}
+
+.rentals-table table tbody tr {
+  transition: all 0.3s ease;
 }
 
 .rentals-table table tbody tr:hover {
-  background: #252525;
+  background: rgba(0, 212, 255, 0.08);
+  border-left: 3px solid #00d4ff;
 }
 
 .rentals-table .badge {
   display: inline-block;
-  padding: 5px 12px;
+  padding: 8px 14px;
   border-radius: 20px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .rentals-table .badge-active {
-  background: #1a4d1a;
+  background: linear-gradient(135deg, rgba(68, 255, 68, 0.2) 0%, rgba(68, 255, 68, 0.1) 100%);
   color: #44ff44;
-  border: 1px solid #44ff44;
+  border: 1px solid rgba(68, 255, 68, 0.4);
 }
 
 .rentals-table .badge-completed {
-  background: #1a3a4d;
+  background: linear-gradient(135deg, rgba(68, 204, 255, 0.2) 0%, rgba(68, 204, 255, 0.1) 100%);
   color: #44ccff;
-  border: 1px solid #44ccff;
+  border: 1px solid rgba(68, 204, 255, 0.4);
 }

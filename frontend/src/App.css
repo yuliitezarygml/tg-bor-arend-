@@ -1,19 +1,20 @@
 .App {
   display: flex;
   min-height: 100vh;
-  background-color: #1a1a1a;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
 }
 
 .main-content {
   flex: 1;
-  padding: 20px;
-  margin-left: 250px;
-  background-color: #1a1a1a;
+  padding: 30px;
+  margin-left: 280px;
+  background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
+  overflow-y: auto;
 }
 
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
-    padding: 10px;
+    padding: 15px;
   }
 }

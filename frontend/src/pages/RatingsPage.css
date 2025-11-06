@@ -12,57 +12,80 @@
 }
 
 .ratings-page h1 {
-  font-size: 2rem;
+  font-size: 28px;
   color: #e0e0e0;
   margin: 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ratings-page h1::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 28px;
+  background: linear-gradient(180deg, #00d4ff 0%, #0088ff 100%);
+  border-radius: 2px;
 }
 
 .btn-refresh {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #00d4ff;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0088ff 100%);
   border: none;
   border-radius: 8px;
   color: #1a1a1a;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.3);
 }
 
 .btn-refresh:hover {
-  background: #00a8cc;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
 }
 
 .ratings-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .stat-card {
-  background: #0f0f0f;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 136, 255, 0.05) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  padding: 2rem;
   text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 212, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.2);
 }
 
 .stat-value {
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #00d4ff;
   margin-bottom: 0.5rem;
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
 }
 
 .stat-label {
-  color: #a0a0a0;
+  color: #a8a8a8;
   font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .loading,
@@ -79,23 +102,26 @@
 }
 
 .rating-card {
-  background: #0f0f0f;
-  border: 1px solid #333;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.8rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .rating-card:hover {
-  border-color: #00d4ff;
-  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+  transform: translateY(-2px);
 }
 
 .rating-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   gap: 1rem;
 }
 
