@@ -128,3 +128,30 @@
     font-size: 13px;
   }
 }
+
+.search-container {
+  padding: 15px 10px;
+  margin: 10px 0;
+}
+
+.search-input {
+  width: 100%;
+  background: rgba(10, 20, 40, 0.7);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: #ffffff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #00d4ff;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), inset 0 0 10px rgba(0, 212, 255, 0.1);
+}
