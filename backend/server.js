@@ -64,32 +64,6 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Сервер работает' });
 });
 
-// Проверка статуса Face-API и системы верификации
-app.get('/api/health/verification', async (req, res) => {
-  try {
-    const { checkFaceApiStatus } = require('./src/utils/documentVerification');
-    const status = await checkFaceApiStatus();
-    
-    res.json({
-      status: 'OK',
-      verification: {
-        faceApiAvailable: status.available,
-        modelsLoaded: status.modelsLoaded,
-        activeChecks: status.checks,
-        mode: status.checks.faceDetection ? 'full' : 'basic'
-      },
-      message: status.checks.faceDetection 
-        ? 'Полная проверка активна (качество + OCR + лица + сравнение)'
-        : 'Базовая проверка активна (качество + OCR)'
-    });
-  } catch (error) {
-    res.status(500).json({ 
-      status: 'ERROR', 
-      error: error.message 
-    });
-  }
-});
-
 // Запуск сервера
 app.listen(PORT, () => {
   console.log(`

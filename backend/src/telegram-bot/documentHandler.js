@@ -1,7 +1,6 @@
 const User = require('../models/User');
 const path = require('path');
 const fs = require('fs').promises;
-const { verifyPassportPhoto, verifyAllDocuments, generateVerificationReport } = require('../utils/documentVerification');
 
 const PASSPORT_DIR = path.join(__dirname, '../../uploads/passports');
 
@@ -106,46 +105,7 @@ async function handlePhotoDocument(bot, msg) {
     // Сохраняем фото
     const photoPath = await savePhotoDocument(bot, photo.file_id, userId, documentType);
 
-    // 🔍 АВТОМАТИЧЕСКАЯ ПРОВЕРКА ДОКУМЕНТА
-    let verificationPassed = true;
-    let verificationMessage = '';
-    
-    try {
-      const verificationResult = await verifyPassportPhoto(photoPath, documentType);
-      
-      if (!verificationResult.passed) {
-        verificationPassed = false;
-        verificationMessage = 
-          '❌ <b>Фото не прошло автоматическую проверку</b>\n\n' +
-          '<b>Обнаруженные проблемы:</b>\n';
-        
-        if (!verificationResult.quality.passed) {
-          verificationMessage += `• Качество изображения: ${verificationResult.quality.message}\n`;
-        }
-        if (!verificationResult.text.passed) {
-          verificationMessage += `• Распознавание текста: ${verificationResult.text.message}\n`;
-        }
-        if (!verificationResult.face.passed) {
-          verificationMessage += `• Обнаружение лица: ${verificationResult.face.message}\n`;
-        }
-        
-        verificationMessage += 
-          '\n<b>Пожалуйста, загрузите фото повторно:</b>\n' +
-          '• Убедитесь в хорошем освещении\n' +
-          '• Сфотографируйте документ четко и полностью\n' +
-          '• Избегайте бликов и размытия\n' +
-          '• Разрешение должно быть не менее 800x600\n\n' +
-          '📷 Отправьте новое фото';
-        
-        await bot.sendMessage(msg.chat.id, verificationMessage, { parse_mode: 'HTML' });
-        return; // Прерываем процесс, не сохраняем в БД
-      }
-    } catch (error) {
-      console.error('Ошибка проверки документа:', error);
-      // Продолжаем даже если проверка не удалась (для отказоустойчивости)
-    }
-
-    // Обновляем пользователя только если проверка пройдена
+    // Обновляем пользователя
     const updateData = {
       verificationStep: nextStep,
     };
@@ -164,99 +124,34 @@ async function handlePhotoDocument(bot, msg) {
     await bot.sendMessage(msg.chat.id, message, { parse_mode: 'HTML' });
 
     if (nextStep === 'completed') {
-      // 🔍 ПОЛНАЯ ПРОВЕРКА ВСЕХ ДОКУМЕНТОВ
-      try {
-        const updatedUser = await User.findOne({ telegramId: userId });
-        const fullVerificationResult = await verifyAllDocuments(
-          userId,
-          updatedUser.passportFrontPhoto,
-          updatedUser.passportBackPhoto,
-          updatedUser.selfiePhoto
-        );
-        
-        // Определяем статус на основе уверенности
-        let verificationStatus = 'manual_review'; // по умолчанию
-        if (fullVerificationResult.overallConfidence >= 80) {
-          verificationStatus = 'auto_approved';
-        } else if (fullVerificationResult.overallConfidence < 40) {
-          verificationStatus = 'rejected';
-        }
-        
-        // Сохраняем результаты в базу данных
-        await User.findOneAndUpdate(
-          { telegramId: userId },
-          {
-            verificationResults: fullVerificationResult,
-            verificationConfidence: fullVerificationResult.overallConfidence,
-            verificationStatus: verificationStatus,
-          }
-        );
-        
-        // Генерируем отчет для администратора
-        const verificationReport = generateVerificationReport(fullVerificationResult);
-        
-        // Уведомление администратору с результатами проверки
-        const adminChatId = process.env.ADMIN_CHAT_ID;
-        if (adminChatId) {
-          const confidenceEmoji = fullVerificationResult.overallConfidence >= 80 ? '✅' : 
-                                 fullVerificationResult.overallConfidence >= 60 ? '⚠️' : '❌';
-          
-          const statusText = verificationStatus === 'auto_approved' ? '✅ АВТОМАТИЧЕСКИ ОДОБРЕНО' :
-                           verificationStatus === 'rejected' ? '❌ РЕКОМЕНДУЕТСЯ ОТКЛОНИТЬ' :
-                           '⚠️ ТРЕБУЕТСЯ РУЧНАЯ ПРОВЕРКА';
-          
-          const adminMessage = 
-            `${confidenceEmoji} <b>ВЕРИФИКАЦИЯ ДОКУМЕНТОВ</b>\n\n` +
-            `👤 ${updatedUser.firstName} ${updatedUser.lastName}\n` +
-            `📱 ${updatedUser.phoneNumber}\n` +
-            `🆔 ID: <code>${userId}</code>\n\n` +
-            `<b>🎯 Статус: ${statusText}</b>\n\n` +
-            `<b>📊 Результаты автоматической проверки:</b>\n` +
-            `━━━━━━━━━━━━━━━━━━━━\n\n` +
-            verificationReport +
-            `\n━━━━━━━━━━━━━━━━━━━━\n\n` +
-            `<b>📁 Сохраненные документы:</b>\n` +
-            `• Паспорт (лицо): ${updatedUser.passportFrontPhoto}\n` +
-            `• Паспорт (оборот): ${updatedUser.passportBackPhoto}\n` +
-            `• Селфи: ${updatedUser.selfiePhoto}\n\n` +
-            `⏰ ${new Date().toLocaleString('ru-RU')}`;
-          
-          try {
-            await bot.sendMessage(adminChatId, adminMessage, { parse_mode: 'HTML' });
-          } catch (err) {
-            console.error('Ошибка отправки уведомления администратору:', err);
-          }
-        }
-        
-        // Информируем пользователя о результатах
-        if (verificationStatus === 'rejected') {
-          await bot.sendMessage(
-            msg.chat.id,
-            '❌ <b>Документы не прошли проверку</b>\n\n' +
-            'К сожалению, загруженные документы не соответствуют требованиям.\n\n' +
-            'Пожалуйста, обратитесь к администратору для решения этого вопроса.',
-            { parse_mode: 'HTML' }
-          );
-        } else if (verificationStatus === 'manual_review') {
-          await bot.sendMessage(
-            msg.chat.id,
-            '⚠️ <b>Внимание!</b>\n\n' +
-            'Ваши документы приняты, но требуют дополнительной проверки администратором.\n\n' +
-            'Это может занять некоторое время. Мы уведомим вас, когда проверка будет завершена.',
-            { parse_mode: 'HTML' }
-          );
-        }
-      } catch (verifyError) {
-        console.error('Ошибка полной проверки документов:', verifyError);
-        // Продолжаем даже при ошибке проверки
-      }
-      
       const { getMainKeyboard } = require('./keyboards');
       await bot.sendMessage(
         msg.chat.id,
         '🎮 Используйте кнопки меню для аренды консолей!',
         getMainKeyboard()
       );
+      
+      // Уведомление администратору
+      const adminChatId = process.env.ADMIN_CHAT_ID;
+      if (adminChatId) {
+        const updatedUser = await require('../models/User').findOne({ telegramId: userId });
+        const adminMessage = 
+          '📄 <b>Верификация документов завершена</b>\n\n' +
+          `👤 ${updatedUser.firstName} ${updatedUser.lastName}\n` +
+          `📱 ${updatedUser.phoneNumber}\n` +
+          `🆔 ID: <code>${userId}</code>\n\n` +
+          `📁 <b>Сохраненные документы:</b>\n` +
+          `• Паспорт (лицо): ${updatedUser.passportFrontPhoto}\n` +
+          `• Паспорт (оборот): ${updatedUser.passportBackPhoto}\n` +
+          `• Селфи с паспортом: ${updatedUser.selfiePhoto}\n\n` +
+          `⏰ ${new Date().toLocaleString('ru-RU')}`;
+        
+        try {
+          await bot.sendMessage(adminChatId, adminMessage, { parse_mode: 'HTML' });
+        } catch (err) {
+          console.error('Ошибка отправки уведомления администратору:', err);
+        }
+      }
     }
   } catch (error) {
     console.error('Ошибка обработки фото документа:', error);

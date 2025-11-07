@@ -58,20 +58,6 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    // Результаты автоматической проверки документов
-    verificationResults: {
-      type: Object,
-      default: null,
-    },
-    verificationConfidence: {
-      type: Number, // 0-100
-      default: 0,
-    },
-    verificationStatus: {
-      type: String,
-      enum: ['pending', 'auto_approved', 'manual_review', 'rejected'],
-      default: 'pending',
-    },
     // === РЕЙТИНГОВАЯ СИСТЕМА ===
     ratingScore: {
       type: Number,
