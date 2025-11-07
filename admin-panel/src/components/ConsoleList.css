@@ -1,0 +1,144 @@
+.console-list {
+  width: 100%;
+  padding: 20px;
+}
+
+.console-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1a1a1a;
+  border: 1px solid #252525;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.console-table thead {
+  background-color: #252525;
+  position: sticky;
+  top: 0;
+}
+
+.console-table th {
+  padding: 15px;
+  text-align: left;
+  color: #e0e0e0;
+  font-weight: 600;
+  border-bottom: 2px solid #2a2a2a;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.console-table tbody tr {
+  border-bottom: 1px solid #252525;
+  transition: background-color 0.2s;
+}
+
+.console-table tbody tr:hover {
+  background-color: #1f1f1f;
+}
+
+.console-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.console-table td {
+  padding: 15px;
+  color: #d0d0d0;
+  font-size: 14px;
+}
+
+.console-table td.console-photo {
+  padding: 8px;
+  text-align: center;
+}
+
+.console-table td.console-photo img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #2a2a2a;
+}
+
+.console-table td.console-photo .no-photo {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #252525;
+  border-radius: 4px;
+  border: 1px dashed #2a2a2a;
+  color: #888;
+  font-size: 11px;
+}
+
+.console-table td.console-id {
+  color: #2196f3;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.console-table td.price {
+  color: #4caf50;
+  font-weight: 600;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-sm {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.btn-edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #1976d2;
+}
+
+.btn-delete {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 1024px) {
+  .console-table {
+    font-size: 12px;
+  }
+
+  .console-table th,
+  .console-table td {
+    padding: 10px;
+  }
+}
