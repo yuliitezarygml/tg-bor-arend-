@@ -1,0 +1,19 @@
+{
+  "name": "ps4-rental-bot",
+  "version": "1.0.0",
+  "description": "Telegram Bot for PS4 Rental",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "telegraf": "^4.12.0",
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

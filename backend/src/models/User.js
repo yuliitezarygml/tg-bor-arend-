@@ -1,11 +1,15 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     telegramId: {
       type: String,
       required: true,
       unique: true,
+    },
+    username: {
+      type: String,
+      default: '',
     },
     firstName: {
       type: String,
@@ -15,105 +19,36 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
-    username: {
-      type: String,
-      default: '',
-    },
     phoneNumber: {
       type: String,
       default: '',
     },
-    photoUrl: {
+    email: {
       type: String,
-      default: null,
-    },
-    contactShared: {
-      type: Boolean,
-      default: false,
-    },
-    registrationStep: {
-      type: String,
-      enum: ['name', 'phone', 'completed'],
-      default: 'name',
-    },
-    // === ВЕРИФИКАЦИЯ ДОКУМЕНТОВ ===
-    verificationStep: {
-      type: String,
-      enum: ['none', 'passport_front', 'passport_back', 'selfie', 'completed'],
-      default: 'none',
-    },
-    passportFrontPhoto: {
-      type: String,
-      default: null,
-    },
-    passportBackPhoto: {
-      type: String,
-      default: null,
-    },
-    selfiePhoto: {
-      type: String,
-      default: null,
-    },
-    verifiedAt: {
-      type: Date,
-      default: null,
-    },
-    // === РЕЙТИНГОВАЯ СИСТЕМА ===
-    ratingScore: {
-      type: Number,
-      default: 50,
-      min: 0,
-      max: 100,
-    },
-    disciplineScore: {
-      type: Number,
-      default: 50,
-      min: 0,
-      max: 100,
-    },
-    loyaltyScore: {
-      type: Number,
-      default: 50,
-      min: 0,
-      max: 100,
-    },
-    ratingStatus: {
-      type: String,
-      enum: ['premium', 'regular', 'risk'],
-      default: 'regular',
-    },
-    // === ФИНАНСЫ ===
-    totalSpent: {
-      type: Number,
-      default: 0,
+      default: '',
     },
     totalRentals: {
       type: Number,
       default: 0,
     },
-    loyaltyBonus: {
+    totalSpent: {
       type: Number,
       default: 0,
     },
-    // === СТАТУС И БЛОКИРОВКА ===
-    isBanned: {
+    isBlocked: {
       type: Boolean,
       default: false,
     },
-    botBlocked: {
-      type: Boolean,
-      default: false,
+    blockReason: {
+      type: String,
+      default: '',
     },
-    botBlockedAt: {
+    blockedAt: {
       type: Date,
       default: null,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', userSchema);

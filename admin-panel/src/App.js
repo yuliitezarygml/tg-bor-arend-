@@ -1,41 +1,79 @@
-import React, { useState } from 'react';
-import ConsolesPage from './pages/ConsolesPage';
-import RentalsPage from './pages/RentalsPage';
-import UsersPage from './pages/UsersPage';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import Dashboard from './pages/Dashboard';
+import './styles/index.css';
+import './styles/dark-theme.css';
+import api from './api';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('rentals');
+  const [admin, setAdmin] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Проверяем наличие токена при загрузке
+    const token = localStorage.getItem('token');
+    const adminData = localStorage.getItem('admin');
+    
+    if (token && adminData) {
+      try {
+        setAdmin(JSON.parse(adminData));
+        setLoading(false);
+      } catch (e) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('admin');
+        setLoading(false);
+      }
+    } else if (token) {
+      verifyToken();
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  const verifyToken = async () => {
+    try {
+      const response = await api.get('/auth/me');
+      setAdmin(response.data);
+    } catch (error) {
+      localStorage.removeItem('token');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = (adminData) => {
+    setAdmin(adminData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('admin');
+    setAdmin(null);
+  };
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', background: 'var(--primary-bg)' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>Загрузка...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="app">
-      <nav className="app-nav">
-        <button 
-          className={`nav-link ${currentPage === 'rentals' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('rentals')}
-        >
-          📋 Заявки
-        </button>
-        <button 
-          className={`nav-link ${currentPage === 'consoles' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('consoles')}
-        >
-          🎮 Консоли
-        </button>
-        <button 
-          className={`nav-link ${currentPage === 'users' ? 'active' : ''}`}
-          onClick={() => setCurrentPage('users')}
-        >
-          👥 Пользователи
-        </button>
-      </nav>
-
-      <main className="app-main">
-        {currentPage === 'rentals' && <RentalsPage />}
-        {currentPage === 'consoles' && <ConsolesPage />}
-        {currentPage === 'users' && <UsersPage />}
-      </main>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/login"
+          element={!admin ? <LoginPage onLogin={handleLogin} /> : <Dashboard admin={admin} onLogout={handleLogout} />}
+        />
+        <Route
+          path="*"
+          element={admin ? <Dashboard admin={admin} onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />}
+        />
+      </Routes>
+    </Router>
   );
 }
 

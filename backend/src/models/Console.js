@@ -1,65 +1,53 @@
 const mongoose = require('mongoose');
 
-const ConsoleSchema = new mongoose.Schema(
+const consoleSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      default: 'PlayStation 4',
+    },
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Category',
+      default: null,
+    },
+    serialNumber: {
+      type: String,
+      required: true,
       unique: true,
     },
-    model: {
+    status: {
       type: String,
-      required: true,
+      enum: ['available', 'rented', 'maintenance', 'reserved'],
+      default: 'available',
     },
-    game: {
-      type: String,
-      required: true,
-    },
-    rentalPrice: {
+    pricePerDay: {
       type: Number,
       required: true,
+      default: 100,
     },
     description: {
       type: String,
       default: '',
     },
-    image: {
-      type: String,
-      default: null,
-    },
-    status: {
-      type: String,
-      enum: ['available', 'rented', 'maintenance'],
-      default: 'available',
-    },
-    location: {
-      type: String,
-      default: '',
-    },
-    // Поля для продажи консолей
-    forSale: {
-      type: Boolean,
-      default: false,
-    },
-    salePrice: {
-      type: Number,
-      default: null,
-    },
     condition: {
       type: String,
-      enum: ['new', 'excellent', 'good', 'fair'],
+      enum: ['excellent', 'good', 'fair', 'poor'],
       default: 'good',
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+    images: [String],
+    qrCode: String,
+    totalRentals: {
+      type: Number,
+      default: 0,
     },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
+    averageRating: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Console', ConsoleSchema);
+module.exports = mongoose.model('Console', consoleSchema);

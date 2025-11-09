@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ReservationSchema = new mongoose.Schema(
+const reservationSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -12,27 +12,41 @@ const ReservationSchema = new mongoose.Schema(
       ref: 'Console',
       required: true,
     },
-    reservedAt: {
-      type: Date,
-      default: Date.now,
-    },
-    expiresAt: {
+    startDate: {
       type: Date,
       required: true,
     },
-    timeoutMinutes: {
-      type: Number,
-      default: 30,
+    endDate: {
+      type: Date,
+      required: true,
     },
-    isExpired: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ['pending', 'confirmed', 'cancelled', 'converted'],
+      default: 'pending',
     },
+    rentalId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Rental',
+      default: null,
+    },
+    notes: {
+      type: String,
+      default: '',
+    },
+    confirmedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Admin',
+    },
+    confirmedAt: Date,
+    cancelledAt: Date,
+    cancelReason: String,
   },
   { timestamps: true }
 );
 
-// Автоматическая очистка истекших резерваций
-ReservationSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
+// Индексы для быстрого поиска
+reservationSchema.index({ consoleId: 1, startDate: 1, endDate: 1 });
+reservationSchema.index({ userId: 1, status: 1 });
 
-module.exports = mongoose.model('Reservation', ReservationSchema);
+module.exports = mongoose.model('Reservation', reservationSchema);
